@@ -31,9 +31,18 @@ def gradient_descent_backtrack(f, g, guess, thresh, beta=0.5):
         guess = new_guess
     return guess
 
-def gradient(f):
+def gradient(f, x, h):
     # f: scalar function of a vector
-    pass
+    # x: center point
+    # h: step size
+    
+    dim = len(x)
+    newx = [0]*dim 
+    for i in range(dim):
+        deriv_dim = np.zeros(dim)
+        deriv_dim[i] = 1
+        newx[i] = (f(x+h*deriv_dim) - f(x-h*deriv_dim))/float(2*h)
+    return np.array(newx)
 
 def example_func_1(x):
     # x a horizontal vector
