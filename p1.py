@@ -36,11 +36,24 @@ def gradient(f):
     pass
 
 def example_func_1(x):
-    # x a horizontal vector
+    """The example function from the book."""
+    # x: a two-dimensional horizontal vector
     return 0.5*(x[0]**2 - x[1])**2 + 0.5*(x[0] - 1)**2
 
 def example_func_1_grad(x):
-    # x a horizontal vector
+    # x: a two-dimensional horizontal vector
     d0 = (x[0]**2 - x[1])*2*x[0] + (x[0] - 1)
     d1 = x[1] - x[0]**2
     return np.array([d0, d1])
+
+def example_func_2(x):
+    """A convex function."""
+    # x: a three-dimensional horizontal vector
+    return (x[0] - 7)**2 + (x[1] - 8.1)**2 + (x[2] - 9.2)**2 + 10.3
+
+def example_func_2_grad(x):
+    # x: a three-dimensional horizontal vector
+    return np.array([2*(x[0] - 7), 2*(x[1] - 8.1), 2*(x[2] - 9.2)])
+
+    
+
