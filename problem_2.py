@@ -38,7 +38,12 @@ def compute_yhat(x_0,w):
 
     return sum([w[exp]*(x_0**exp) for exp in range(len(w))])
 
-
+def get_sse_and_sse_prime(x,y,w):
+    def f(w):
+        return sse(x,y,w)
+    def fprime(w):
+        return sse_derivative(x,y,w)
+    return (f, fprime)
 
 def sse_derivative(x, y, w):
     # x: data x coords
