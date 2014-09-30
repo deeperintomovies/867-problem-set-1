@@ -56,20 +56,34 @@ def sse_derivative(x, y, w):
     return coeffs.dot(error_vector)
 
 
-def problem_2(M):
-    x,y = getData('curvefitting.txt')
-    w_ols = max_likelihood(x, y, M)
+def bishop_plot(x,y,w,l,M):
     low_limit_x = min(x) - 0.1*abs(max(x)-min(x)) 
     hi_limit_x = max(x) + 0.1*abs(max(x)-min(x))
     x_points = np.linspace(low_limit_x, hi_limit_x, 100)
-    y_hat = np.array([compute_yhat(pt, w_ols) for pt in x_points])
+    y_hat = np.array([compute_yhat(pt, w) for pt in x_points])
     low_limit_y = min(y) - 0.2*abs(max(y) - min(y))
     hi_limit_y = max(y) + 0.2*abs(max(y)-min(y))
-    plt.plot(x_points, y_hat, '-b', label='Max Likelihood, M='+str(M))
+    plt.plot(x_points, y_hat, '-b', label=l+', M='+str(M)])
     plt.scatter(x, y, label='Data')
     plt.plot(x_points, np.sin(2*np.pi*x_points), '-', color='0.5', label='Sin(2*pi*x)')
     plt.xlim(low_limit_x, hi_limit_x)
     plt.ylim(low_limit_y, hi_limit_y)
     plt.legend()
     plt.show()
-    plt.savefig('Problem2_M_'+str(M)+'.png')    
+    plt.savefig('Problem2_'+l+'M_'+str(M)+'.png')   
+
+def problem_2_1(max_M=15):
+    sse_M = []
+    l_2_norm = []
+    for i in range(max_M): 
+        x,y = getData('curvefitting.txt')
+        w_ols = max_likelihood(x,y,i)
+        bishop_plot(x,y,w_ols,'MaxLikelihood'+str(i))
+        sse_M.append(sse(x,y,w))
+        l_2_norm.append(sum([ii**2 for ii in w])**0.5)
+    plt.plot(np.array(range(max_M)), np.array(sse_M), label='Sum of Squared Erros')
+    plt.savefig('Problem2_OLS_SSEvsM.png')
+    plt.plot(np.array(range(max_M)), np.array(l_2_norm), label='L2 Norm of Weight Vector')
+    plt.savefig('Problem2_OLS_L2_NormvsM.png')
+if __name__ == '__main__':
+    problem_2_1()
