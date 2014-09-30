@@ -12,7 +12,8 @@ def max_likelihood(x, y, M):
     # x: data x coords
     # y: data y coords
     # M: fit polynomial of order M
-    # w_ols: ols regression coeffs---ie, y_ols(x) = w_ols[0] + w_ols[1]*x +...+ w_ols[M]*x^M
+    # w_ols: ols regression coeffs---ie,
+        # y_ols(x) = w_ols[0] + w_ols[1]*x +...+ w_ols[M]*x^M
     X = np.array([[i**d for d in range(M+1)] for i in x])#.reshape((len(x), M+1))
     X_square = (X.T.dot(X))
     X_inv = np.linalg.inv(X_square)
