@@ -1,12 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
-def getData(name):
-    data = np.loadtxt(name)
-    # Returns column matrices
-    X = data[0:1].T
-    Y = data[1:2].T
-    return X, Y
+from util import getData
 
 def max_likelihood(x, y, M):
     # x: data x coords
@@ -20,21 +14,6 @@ def max_likelihood(x, y, M):
     X_final = X_inv.dot(X.T)
     w_ols = X_final.dot(y)
     return w_ols
-
-def max_likelihood_ridge(x, y, M, l):
-    # x: data x coords
-    # y: data y coords
-    # M: fit polynomial of order M
-    # l: lambda in ridge regression
-    # w_ridge: ridge regression coeffs
-    lambda_I = l*np.identity(M+1)
-    X = np.array([[i**d for d in range(M+1)] for i in x])#.reshape((len(x), M+1))
-    X_square = (X.T.dot(X))
-    X_inv = np.linalg.inv(lambda_I + X_square)
-    X_final = X_inv.dot(X.T)
-    w_ridge = X_final.dot(y)
-    return w_ridge
-
 
 def sse(x, y, w):
     # x: data x coords
@@ -138,5 +117,6 @@ def problem_2_1(max_M=15):
     for M in [0,1,3,9]:
         w_ols = max_likelihood(x.ravel(),y.ravel(),M)
         bishop_plot(x,y,w_ols,'MaxLikelihoodDataMissing', M)
+
 if __name__ == '__main__':
     problem_2_1()
