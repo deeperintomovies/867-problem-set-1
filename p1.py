@@ -80,7 +80,7 @@ def example_func_2(x):
 
 def example_func_2_grad(x):
     # x: a two-dimensional horizontal vector
-    return np.array([4*(x[0] - 7)**3, 4*(x[1] - 8.1)**3])
+    return np.array([4*x[0]**3, 4*x[1]**3])
 
 def example_func_3(x):
     """Ackley's function"""
@@ -88,6 +88,16 @@ def example_func_3(x):
     return - 20*math.exp(-0.2*(0.5*(x[0]**2 + x[1]**2))**0.5) \
                - math.exp(0.5*(math.cos(2*math.pi*x[0]) + math.cos(2*math.pi*x[1]))) \
                + 20 + math.e
+
+def example_func_3_grad(x):
+    # x: a two-dimensional horizontal vector
+    s = (x[0]**2 + x[1]**2)**0.5
+    t = math.exp(0.5*(math.cos(2*math.pi*x[0]) + math.cos(2*math.pi*x[1])))
+    d1 = -20*x[0]*(-0.2)*(0.5)**0.5/s*math.exp(-0.2*0.5**0.5*s) + \
+         math.pi*math.sin(2*math.pi*x[0])*t
+    d2 = -20*x[1]*(-0.2)*(0.5)**0.5/s*math.exp(-0.2*0.5**0.5*s) + \
+         math.pi*math.sin(2*math.pi*x[1])*t
+    return np.array([d1, d2])
 
 def example_func_4(x):
     """Easom function"""
