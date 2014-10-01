@@ -7,6 +7,14 @@ def getData(name):
     Y = data[1:2].T
     return X.ravel(), Y.ravel()
 
+def get_blog_x_data(filename):
+    data = np.loadtxt(filename, delimiter=',')
+    return data
+
+def get_blog_y_data(filename):
+    data = np.loadtxt(filename)
+    return data.ravel()
+
 
 def get_xs_to_plot(values):
     """Takes some x values and returns a ndarray of x values spaced evenly

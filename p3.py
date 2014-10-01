@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from util import getData, get_xs_to_plot
+from util import getData, get_xs_to_plot, get_blog_x_data, get_blog_y_data
 from p2 import bishop_plot, sse, compute_yhat
 
 def polynomial_ridge(x, y, M, l):
@@ -24,13 +24,17 @@ def ridge_regression(X, y, lam):
     return np.linalg.inv(lam*np.identity(D) + X.T.dot(X)).dot(X.T).dot(y)
 
 def problem_3_3():
-    pass
+    X = get_blog_x_data('blogdata/x_train.csv')
+    y = get_blog_y_data('blogdata/y_train.csv')
+    print 'here'
+    w_ridge = ridge_regression(X, y, 0.1)
+    return w_ridge
 
 def problem_3_1():
     x, y = getData('curvefitting.txt')
     for M in [3, 4, 5, 6, 7, 8, 9]:
         for lam in [0, 0.0003, 0.001, 0.003]:
-            w_ridge = max_likelihood_ridge(x, y, M, lam)
+            w_ridge = polynomial_ridge(x, y, M, lam)
             bishop_plot(x, y, w_ridge, 'ridge regression, M=%s, lam=%s' % (M, lam))
             plt.savefig('problem3_1_M_%s_lam_%s.png' % (M, lam))
             print 'just tried M = %s, lam=%s' % (M, lam)
@@ -41,7 +45,7 @@ def problem_3_2(A_or_B, plot=False):
     valid_x, valid_y = getData('regress_validate.txt')
     for M in range(10):
         for lam in [0, 0.1, 0.5, 1, 5, 10]:
-            w_ridge = max_likelihood_ridge(train_x, train_y, M, lam)
+            w_ridge = polynomial_ridge(train_x, train_y, M, lam)
             xs_to_plot = get_xs_to_plot(train_x.tolist() + valid_x.tolist())
             y_hat = np.array([compute_yhat(x, w_ridge) for x in xs_to_plot])
             if plot:
@@ -56,5 +60,6 @@ def problem_3_2(A_or_B, plot=False):
                 (A_or_B, M, lam, sse(valid_x, valid_y, w_ridge))
 
 if __name__ == '__main__':
-    problem_3_2('A')
-    problem_3_2('B')
+    #problem_3_2('A')
+    #problem_3_2('B')
+    problem_3_3()
