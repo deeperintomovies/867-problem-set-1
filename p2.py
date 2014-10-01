@@ -94,8 +94,6 @@ def problem_2_1(max_M=15):
     l_2_norm = []
     for i in range(max_M): 
         x,y = getData('curvefitting.txt')
-        x = x.ravel()
-        y = y.ravel()
         w_ols = max_likelihood(x,y,i)
         bishop_plot(x,y,w_ols,'maximum likelihood, M = %s' % i)
         plt.savefig('problem2_ml_M_%s.png' % i)
@@ -109,14 +107,12 @@ def problem_2_1(max_M=15):
     plt.savefig('problem2_OLS_L2_NormvsM.png')
     plt.close()
     x,y = getData('curvefitting.txt')
-    x = x.ravel()
-    y = y.ravel()
     indices = np.random.choice(max(x.size, y.size)+1, 2)
     for ii in np.sort(indices)[::-1]:
         x = np.delete(x,ii)
         y = np.delete(y,ii)
     for M in [0,1,3,9]:
-        w_ols = max_likelihood(x.ravel(),y.ravel(),M)
+        w_ols = max_likelihood(x,y,M)
         bishop_plot(x,y,w_ols,'maximum likelihood w/missing, M = %s' % M)
         plt.savefig('problem2_mlmissing_M_%s.png' % M)
 
